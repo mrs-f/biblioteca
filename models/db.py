@@ -138,6 +138,7 @@ db.define_table('livros',
 	Field('ano_pub', 'string'),
 	Field('ed', 'string'),
 	Field('descricao', 'text'),
+	auth.signature
 )
 
 
