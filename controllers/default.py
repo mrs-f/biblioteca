@@ -8,18 +8,45 @@
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
 
-
+@auth.requires_login()
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+    response.flash = T("Bem-vindo(a) a biblioteca!")
+    return locals()
 
-    if you need a simple wiki simply replace the two lines below with:
-    return auth.wiki()
-    """
-    response.flash = T("Hello World")
-    return dict(message=T('Welcome to web2py!'))
+@auth.requires_membership('admin')
+def cadastrar_livro():
+    response.flash = T("Cadastrar livro")
+    form = SQLFORM(db.livros)
+    if form.process().accepted:
+       response.flash = 'Registro criado'
+    elif form.errors:
+       response.flash = 'Existem erros no formulario: ' + str(form.errors)
+    else:
+       response.flash = 'Por favor, preencha o formulario'
+    return locals()
 
+@auth.requires_membership('admin')
+def listar_livros():
+    # response.flash = T("Listar livros")
+    # livros = db(livros.db.id > 0).select()
+    livros = SQLFORM.grid(db.livros)
+    return locals()
+
+@auth.requires_membership('admin')
+def alterar_livro():
+    response.flash = T("Listar livros")
+
+    id_livro = request.args(0)
+
+    form = SQLFORM(db.livros)
+    if form.process().accepted:
+       response.flash = 'Livro alterado'
+    elif form.errors:
+       response.flash = 'Existem erros no formulario: ' + str(form.errors)
+    else:
+       response.flash = 'Por favor, preencha o formulario'
+
+    return locals()
 
 def user():
     """

@@ -130,3 +130,17 @@ auth.settings.reset_password_requires_verification = True
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
 # auth.enable_record_versioning(db)
+
+db.define_table('livros', 
+	Field('titulo', 'string'),
+	Field('isbn', 'string'),
+	Field('capa', 'upload'),
+	Field('ano_pub', 'string'),
+	Field('ed', 'string'),
+	Field('descricao', 'text'),
+)
+
+
+
+
+
